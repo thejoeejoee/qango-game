@@ -1,7 +1,13 @@
+const colors = require("tailwindcss/colors");
+
 module.exports = {
-  safelist: [
-    {
-      pattern: /bg-*/,
-    }
-  ]
-}
+  purge: ['./model/*.ts'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        orange: colors.orange,
+      },
+    },
+  },
+};

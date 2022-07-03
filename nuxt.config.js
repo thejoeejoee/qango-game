@@ -44,7 +44,7 @@ export default {
   ],
 
   router: {
-    base: '/qango-game/'
+    // base: '/qango-game/'
   }
 
 }

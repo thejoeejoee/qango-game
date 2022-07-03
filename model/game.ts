@@ -144,11 +144,11 @@ const DEFAULT_GROUPS: TilesGroup[] = [
   new TilesGroup("bg-pink-400", [[0, 5], [1, 5], [0, 4]]),
   new TilesGroup("bg-pink-400", [[5, 0], [5, 1], [4, 0]]),
 
-  new TilesGroup("bg-yellow-400", [[2, 0], [1, 1], [0, 2]]),
-  new TilesGroup("bg-yellow-400", [[5, 3], [4, 4], [3, 5]]),
+  new TilesGroup("bg-yellow-300", [[2, 0], [1, 1], [0, 2]]),
+  new TilesGroup("bg-yellow-300", [[5, 3], [4, 4], [3, 5]]),
 
-  new TilesGroup("bg-red-300", [[0, 3], [1, 4], [2, 5]]),
-  new TilesGroup("bg-red-300", [[3, 0], [4, 1], [5, 2]]),
+  new TilesGroup("bg-orange-400", [[0, 3], [1, 4], [2, 5]]),
+  new TilesGroup("bg-orange-400", [[3, 0], [4, 1], [5, 2]]),
 
   new TilesGroup("bg-blue-300", [[2, 1], [2, 2], [1, 2]]),
   new TilesGroup("bg-blue-300", [[3, 4], [3, 3], [4, 3]]),
