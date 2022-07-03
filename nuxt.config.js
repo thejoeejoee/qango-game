@@ -43,4 +43,8 @@ export default {
   modules: [
   ],
 
+  router: {
+    base: '/qango-game/'
+  }
+
 }
