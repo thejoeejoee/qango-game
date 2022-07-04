@@ -6,10 +6,10 @@
     >
       player
       <span
-        class="rounded-full uppercase text-xl border-2 h-12 w-12"
+        class="Token Token--small"
         :class="{
-            'bg-white border-gray-100 text-gray-700': game.nextPlayer === 0,
-            'bg-gray-800 border-gray-700 text-gray-100': game.nextPlayer === 1,
+            'Token--light': game.nextPlayer === 0,
+            'Token--dark': game.nextPlayer === 1,
         }"
       ></span>
       is playing
@@ -37,14 +37,10 @@
       >
         <div
             v-if="game.positionToToken(indexToPosition(i))"
-            class="
-              w-16 h-16
-              rounded-full
-              shadow-xl border-2
-            "
+            class="Token blur"
             :class="{
-              'bg-white border-gray-100': game.positionToToken(indexToPosition(i)).player === 0,
-              'bg-gray-800 border-gray-700': game.positionToToken(indexToPosition(i)).player === 1,
+              'Token--light': game.positionToToken(indexToPosition(i)).player === 0,
+              'Token--dark': game.positionToToken(indexToPosition(i)).player === 1,
             }"
         ></div>
       </div>
@@ -58,10 +54,29 @@
 import {indexToPosition} from "~/model/position";
 import {Game} from "~/model/game";
 
-
 export default {
   data: () => ({game: new Game()}),
 
   methods: {indexToPosition},
 }
 </script>
+
+<style>
+.Token {
+  @apply w-16 h-16 rounded-full shadow-xl border-2;
+}
+.Token--small {
+  @apply w-12 h-12;
+}
+.Token--light {
+  @apply bg-white border-gray-100;
+
+  box-shadow: 5px 5px 0 lightgray;
+}
+.Token--dark {
+  @apply bg-gray-800 border-gray-700;
+
+
+  box-shadow: 5px 5px 0 #444;
+}
+</style>
