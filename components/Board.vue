@@ -18,7 +18,9 @@
       v-if="game.result"
       class="text-center rounded bg-green-200 text-green-700 border-2 border-green-300 my-2 py-4 text-xl font-bold"
     >
-      {{ game.result }}
+      <template v-if="game.result.winner === 0">Player white is a winner.</template>
+      <template v-else-if="game.result.winner === 1">Player black is a winner.</template>
+      <template v-else-if="game.result.winner === undefined">It's a draw.</template>
     </div>
     <div class="grid grid-cols-6 gap-2">
       <div
@@ -31,6 +33,7 @@
         :class="{
             [game.positionToGroup(indexToPosition(i)).color]: true,
             'cursor-pointer': !game.positionToToken(indexToPosition(i)),
+            'animate-pulse': game.result && game.result.includesTileIndex(i)
           }"
         :title="indexToPosition(i)"
         @click="game.playPosition(indexToPosition(i))"

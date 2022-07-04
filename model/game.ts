@@ -1,4 +1,4 @@
-import {Position} from "~/model/position";
+import {indexToPosition, Position} from "~/model/position";
 import {PlayerIndex, Token} from "~/model/player";
 import {sliding} from "~/model/utils";
 
@@ -12,13 +12,29 @@ class TilesGroup {
   }
 }
 
+export class GameResult {
+  constructor(
+    // null in case of tie
+    public readonly winner: PlayerIndex | null,
+    public readonly winningTiles: Position[]
+  ) {
+
+  }
+
+  public includesTileIndex(index: number) : boolean {
+    const pos = indexToPosition(index)
+    return this.winningTiles.some(p => p[0] == pos[0] && p[1] == pos[1])
+  }
+}
+
+
 export class Game {
   public tokens: Token[]
   public nextPlayer: PlayerIndex = 0
-  public result: string = ''
+  public result: GameResult | void = undefined
 
   constructor(
-    public groups: TilesGroup[] = DEFAULT_GROUPS
+    public readonly groups: TilesGroup[] = DEFAULT_GROUPS
   ) {
     this.tokens = []
   }
@@ -30,19 +46,13 @@ export class Game {
     this.tokens.push(new Token(pos, this.nextPlayer))
     this.nextPlayer = (this.nextPlayer + 1) % 2
 
-    let winner
-    if ((winner = this.hasWinnerByGroups(pos)) != undefined) {
-      this.result = `Player ${winner} is winner by group!`
-    } else if ((winner = this.hasWinnerBySquare(pos)) != undefined) {
-      this.result = `Player ${winner} is winner by square!`
-    } else if ((winner = this.hasWinnerByLine(pos)) != undefined) {
-      this.result = `Player ${winner} is winner by line of 5!`
-    } else if (this.isDraw()) {
-      this.result = `This is complete draw, no winner.`
-    }
+    this.result = this.hasWinnerByGroups(pos) ||
+      this.hasWinnerBySquare(pos) ||
+      this.hasWinnerByLine(pos) ||
+      this.isDraw()
   }
 
-  public hasWinnerByGroups(lastPlayedPos: Position): PlayerIndex | void {
+  public hasWinnerByGroups(lastPlayedPos: Position): GameResult | void {
     const token = this.positionToToken(lastPlayedPos)
     if (!token) return
 
@@ -57,11 +67,11 @@ export class Game {
         return token && token.player == player
       }
     )) {
-      return player
+      return new GameResult(player, g.tiles)
     }
   }
 
-  public hasWinnerBySquare(lastPlayedPos: Position): PlayerIndex | void {
+  public hasWinnerBySquare(lastPlayedPos: Position): GameResult | void {
     const token = this.positionToToken(lastPlayedPos)
     if (!token) return
     const [x, y] = token.position
@@ -78,11 +88,11 @@ export class Game {
         const token = this.positionToToken(pos)
         return token && token.player == player
       }))
-        return player
+        return new GameResult(player, square)
     }
   }
 
-  public hasWinnerByLine(lastPlayedPos: Position): PlayerIndex | void {
+  public hasWinnerByLine(lastPlayedPos: Position): GameResult | void {
     const token = this.positionToToken(lastPlayedPos)
     if (!token) return
     const [x, y] = token.position
@@ -104,13 +114,15 @@ export class Game {
           const token = this.positionToToken(pos)
           return token && token.player == player
         }))
-          return player
+          return new GameResult(player, five)
       }
     }
   }
 
-  public isDraw(): boolean {
-    return this.tokens.length === 6 * 6 && !this.result
+  public isDraw(): GameResult | void {
+    return this.tokens.length === 6 * 6 && !this.result ?
+      new GameResult(null, []) :
+      undefined
   }
 
   public positionToGroup(pos: Position): TilesGroup | void {
