@@ -26,7 +26,7 @@
       <div
         v-for="(_, i) in new Array(36)"
         class="
-            h-32 w-32 border-1 border-gray-300 rounded-lg
+            Tile border-1 border-gray-300 rounded-lg
             flex items-center justify-center
             text-2xl shadow-md hover:shadow
           "
@@ -66,7 +66,8 @@ export default {
 
 <style>
 .Token {
-  @apply w-16 h-16 rounded-full shadow-xl border-2;
+  @apply w-1/2 rounded-full shadow-xl border-2;
+  aspect-ratio: 1/1;
 }
 .Token--small {
   @apply w-12 h-12;
@@ -74,12 +75,14 @@ export default {
 .Token--light {
   @apply bg-white border-gray-100;
 
-  box-shadow: 5px 5px 0 lightgray;
+  box-shadow: .1em .1em 0 lightgray;
 }
 .Token--dark {
   @apply bg-gray-800 border-gray-700;
 
-
-  box-shadow: 5px 5px 0 #444;
+  box-shadow: .1em .1em 0 #444;
+}
+.Tile {
+  aspect-ratio: 1/1;
 }
 </style>

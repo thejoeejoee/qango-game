@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-row items-center justify-center">
-    <Board class="max-w-5xl"></Board>
+  <div class="flex flex-row items-center justify-center h-screen">
+    <Board class="max-w-3xl w-full mx-2" ></Board>
   </div>
 </template>
 
